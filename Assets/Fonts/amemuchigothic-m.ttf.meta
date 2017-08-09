@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 0ea8d31f57d4e42d0b757c17db038aea
+timeCreated: 1502244816
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: amemuchigothic-M
+  fontNames:
+  - amemuchigothic-M
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

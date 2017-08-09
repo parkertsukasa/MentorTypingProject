@@ -86,14 +86,13 @@ public class RandomPopScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		quetnum_text.text = "第" + questnum + "問";
-		if (questnum == 4) {
-			SceneManager.LoadScene ("Result");
+		if (correct_on == true) {
+			incorrect.SetActive (false);
 		}
 
-		Debug.Log ("入力"+ IF.text);
-		Debug.Log ("正答" + mentor[nownumber].name);
-		Debug.Log (nownumber);
+		quetnum_text.text = "第" + questnum + "問";
+
+		Debug.Log (SMS.score);
 
 		if (roulette == true) {
 			int i = UnityEngine.Random.Range (0, mentor.Length);
@@ -105,6 +104,7 @@ public class RandomPopScript : MonoBehaviour {
 		}
 			
 		if (IF.text == mentor [nownumber].name) {// + System.Environment.NewLine) {
+			SMS.Correct();
 			IF.text = "";
 				correct.SetActive (true);
 				correct_on = true;
@@ -117,7 +117,7 @@ public class RandomPopScript : MonoBehaviour {
 			if (returncount >= 2) {
 				if (correct_on == false) {
 					incorrect.SetActive (true);
-					Invoke ("IncorrectStop", 0.5f);
+					Invoke ("IncorrectStop", 0.4f);
 					IF.text = "";
 					returncount = 0;
 				}
@@ -128,6 +128,7 @@ public class RandomPopScript : MonoBehaviour {
 	public void Roulette(){
 		if (IF.text == mentor[nownumber].name){// + System.Environment.NewLine) {
 			if (nownumber < mentor.Length) {
+				SMS.Correct ();
 				IF.text = "";
 				correct.SetActive (true);
 				roulette = true;
@@ -141,7 +142,7 @@ public class RandomPopScript : MonoBehaviour {
 			}
 		} else {
 			incorrect.SetActive (true);
-			Invoke ("IncorrectStop",0.5f);
+			Invoke ("IncorrectStop",0.3f);
 		}
 	}
 
@@ -150,23 +151,44 @@ public class RandomPopScript : MonoBehaviour {
 	}
 
 	void PreStop(){
+		incorrect.SetActive (false);
 		int i = UnityEngine.Random.Range (0, mentor.Length);
 		ri.texture = mentor[i].image;
 		roulette = false;
+		if (questnum == 10) {
+			SceneManager.LoadScene ("Result");
+		}
 	}
 
 	void Stop(){
 		if (nownumber <= mentor.Length) {
 			nownumber += 1;
+			if (questnum == 11) {
+				SceneManager.LoadScene ("Result");
+			}
 		} 
+		incorrect.SetActive (false);
 		correct.SetActive (false);
-		correct_on = false;
+		Invoke ("NotZannen", 2.0f);
 		if (nownumber == mentor.Length) {
 			//シーン移動
 		} 
 		ri.texture = mentor[nownumber].image;
 		IF.text = "";
 		questnum += 1;
-		SMS.Correct ();
+	}
+
+	void NotZannen(){
+		correct_on = false;
+	}
+
+	public void Skip(){
+		incorrect.SetActive (true);
+		Invoke ("IncorrectStop",0.3f);
+		Invoke ("Stop", 1.0f);
+		Invoke ("PreStop", 0.6f);
+		Invoke ("PreStop", 0.8f);
+		Invoke ("PreStop", 0.5f);
+		nownumber += 1;
 	}
 }

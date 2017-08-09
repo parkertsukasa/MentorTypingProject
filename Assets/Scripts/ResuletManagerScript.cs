@@ -16,7 +16,7 @@ public class ResuletManagerScript : MonoBehaviour {
 		scoremanager = GameObject.Find ("ScoreManager");
 		SMS = scoremanager.GetComponent<ScoreManagerScript> ();
 
-		score_text.text = "10問中" + SMS.score + "正解しました。";
+		score_text.text = SMS.score + "/10";
 	}
 	
 	// Update is called once per frame
